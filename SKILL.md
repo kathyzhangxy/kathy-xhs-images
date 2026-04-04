@@ -1,7 +1,7 @@
 # kathy-xhs-images Skill
 
 > 小红书图片生成（ImageGen 直接调用流程）
-> 版本：v2.1
+> 版本：v2.2
 > 创建日期：2026-04-04
 > 更新日期：2026-04-05
 
@@ -206,7 +206,7 @@ knowledge/cases/
 | `references/styles/pencil-handdrawn.md` | 铅笔手绘风定义（色彩、线条、约束模板、点缀模板） |
 | `references/canvases/grid-canvas.md` | 网格画布定义（宽高比、安全区域、布局适配） |
 | `references/workflows/prompt-writing-guide.md` | 风格注入流程、三段式结构、标题规范、元素分类、常见错误 |
-| `references/layouts/layout-patterns.md` | 布局 A~E 风格无关模板 + 铅笔手绘风示例 |
+| `references/layouts/layout-patterns.md` | 布局 A~G 风格无关模板 + 铅笔手绘风示例 |
 | `references/elements/icons.md` | 常用图标 Prompt 描述 |
 | `references/elements/decorations.md` | 点缀技巧、已验证组合、常见错误 |
 | `references/examples/prompt-examples.md` | 已验证成功的完整 Prompt 示例 |
@@ -229,3 +229,25 @@ knowledge/cases/
 ## 逐页等待规则（硬性规则）
 
 每完成一页（生图 + pipeline 合成）后，必须停下来等待用户的下一步指令。绝不自行继续生成下一页。
+
+---
+
+## 经验总结
+
+### 2026-04-05 经验总结
+
+#### 新增 Good Cases
+- **P0-豆包指令大全（Cover）**：淡紫色纯色背景 + 黑色粗体标题 + 黄色记号笔高亮"豆包大神" + 手绘小图标点缀（星星+爱心+闪电）
+- **P1-P5（Inner）**：统一的多卡片竖向排列布局（布局 G），4-5个卡片，蓝色手绘边框 + 编号圆圈 + 手绘图标 + 输入说明 + 绿色效果文字
+
+#### 新提炼的 Prompt 模式
+- **多卡片竖向排列（布局 G）**：Post 07 P1-P5 验证成功，适用于多指令/多方法/清单类内容
+  - 关键：编号圆圈必须明确描述"蓝色粗边框圆圈，白色填充，中间黑色数字X，直径约30px"
+  - 关键：每个卡片必须用边框容器包裹，否则内容散乱
+  - 关键：卡片间用虚线连接营造引导感
+  - 关键：点缀元素分散分布，不要集中在一个位置
+
+#### 更新的 Skill 章节
+- `references/layouts/layout-patterns.md`：新增布局 G（多卡片竖向排列），含 Post 07 P1-P5 验证案例
+- `SKILL.md`：Step 2 布局表增加布局 G，版本更新至 v2.2
+- `knowledge/cases/good/`：新增 6 个案例（1 cover + 5 inner）
