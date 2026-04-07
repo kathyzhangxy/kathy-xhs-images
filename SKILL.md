@@ -1,9 +1,9 @@
 # kathy-xhs-images Skill
 
 > 小红书图片生成（ImageGen 直接调用流程）
-> 版本：v2.2
+> 版本：v3.0
 > 创建日期：2026-04-04
-> 更新日期：2026-04-05
+> 更新日期：2026-04-06
 
 ## 概述
 
@@ -18,8 +18,11 @@
 | 风格标识 | 名称 | 描述 | 状态 |
 |----------|------|------|------|
 | `pencil-handdrawn` | 铅笔手绘风 | Notion风格铅笔线条，蓝主色+橙紫点缀 | 默认 |
+| `minimal-warm` | 极简暖色风 | 暖白背景+橙色编号/高亮，极简现代 | 新增 |
 
-**风格定义详见：** `references/styles/pencil-handdrawn.md`
+**风格定义详见：**
+- `references/styles/pencil-handdrawn.md`
+- `references/styles/minimal-warm.md`
 
 未来可扩展：水彩风、扁平风、复古风等。
 
@@ -28,8 +31,11 @@
 | 画布标识 | 名称 | 宽高比 | 描述 | 状态 |
 |----------|------|--------|------|------|
 | `grid-canvas` | 网格画布 | 3:4 | 小红书标准竖版，模块化网格布局 | 默认 |
+| `solid-canvas` | 纯色画布 | 3:4 | 纯色背景，无网格/纹理 | 新增 |
 
-**画布定义详见：** `references/canvases/grid-canvas.md`
+**画布定义详见：**
+- `references/canvases/grid-canvas.md`
+- `references/canvases/solid-canvas.md`
 
 未来可扩展：全屏画布、分屏画布、手机外框画布等。
 
@@ -69,6 +75,10 @@
 | **布局 D：多方案卡片** | 页面需要展示多种解决方案 | 问题解决思路、调试步骤 |
 | **布局 E：问题调试页** | 页面需要展示问题场景 + 解决方法 | 问题调试页、错误修复指导 |
 | **布局 F：多宫格展示** | 页面需要展示多个状态/版本的效果对比 + 功能清单 | 最终效果展示、多版本对比 |
+| **布局 G：多卡片竖向排列** | 页面需要展示多个指令/方法/清单 | 多指令展示、多方法介绍、清单类内容 |
+| **布局 H：技能排行榜/列表页** | 页面需要展示技能/工具排行榜、单个技能详情 | CLAWHUB技能介绍、TOP N列表 |
+| **布局 H-2：技能总览列表页** | 页面需要展示排行榜总结、一图看懂 | 总结页、排行榜总览 |
+| **布局 I：封面页** | 系列帖封面、主题介绍页、吸引点击的首页 | 封面页、吸引点击的首页 |
 
 **第二步：复杂页面先确认布局结构（硬性规则）**
 
@@ -204,9 +214,12 @@ knowledge/cases/
 | 参考文件 | 内容 |
 |---------|------|
 | `references/styles/pencil-handdrawn.md` | 铅笔手绘风定义（色彩、线条、约束模板、点缀模板） |
+| `references/styles/minimal-warm.md` | 极简暖色风定义（暖白背景、橙色编号/高亮） |
 | `references/canvases/grid-canvas.md` | 网格画布定义（宽高比、安全区域、布局适配） |
+| `references/canvases/solid-canvas.md` | 纯色画布定义（纯色背景、安全区域） |
+| `references/generic-design-rules.md` | **通用设计规则库**（同行对齐、长文本处理、Prompt结构化、Evaluator检查清单） |
 | `references/workflows/prompt-writing-guide.md` | 风格注入流程、三段式结构、标题规范、元素分类、常见错误 |
-| `references/layouts/layout-patterns.md` | 布局 A~G 风格无关模板 + 铅笔手绘风示例 |
+| `references/layouts/layout-patterns.md` | 布局 A~I 风格无关模板 + 铅笔手绘风/minimal-warm示例 |
 | `references/elements/icons.md` | 常用图标 Prompt 描述 |
 | `references/elements/decorations.md` | 点缀技巧、已验证组合、常见错误 |
 | `references/examples/prompt-examples.md` | 已验证成功的完整 Prompt 示例 |
@@ -251,3 +264,24 @@ knowledge/cases/
 - `references/layouts/layout-patterns.md`：新增布局 G（多卡片竖向排列），含 Post 07 P1-P5 验证案例
 - `SKILL.md`：Step 2 布局表增加布局 G，版本更新至 v2.2
 - `knowledge/cases/good/`：新增 6 个案例（1 cover + 5 inner）
+
+### 2026-04-06 经验总结
+
+#### 新增风格/画布/布局
+- **minimal-warm 极简暖色风**：暖白背景（#f5f0e8）+ 橙色圆形编号（#ff8c42）+ 橙色高亮，适用于CLAWHUB技能介绍类帖子
+- **solid-canvas 纯色画布**：3:4 小红书标准竖版，纯色背景无网格/纹理，顶部50px安全区，左右40px，底部60px
+- **布局 H：技能排行榜/列表页**：单个技能详情页模板，包含编号圆圈+技能名+描述+核心能力+底部统计标签
+- **布局 H-2：技能总览列表页**：总结页/一图看懂模板，包含主标题+7个技能紧凑列表+底部CTA
+- **布局 I：封面页**：系列帖封面模板，主标题超大字号+副标题+装饰元素+底部标签
+
+#### 新提炼的 Prompt 模式
+- **CLAWHUB 技能介绍体系**：3种布局组合使用
+  - 封面（布局 I）：吸引点击，超大标题+装饰
+  - 单个技能详情（布局 H）：橙色圆形编号醒目，核心能力用橙色菱形引导
+  - 总结总览（布局 H-2）：紧凑列表，冠军用特殊标识，底部CTA引导行动
+
+#### 更新的 Skill 章节
+- `references/styles/minimal-warm.md`：新建极简暖色风格定义
+- `references/canvases/solid-canvas.md`：新建纯色画布定义
+- `references/layouts/layout-patterns.md`：新增布局 H、H-2、I，含 minimal-warm 风格示例
+- `SKILL.md`：风格 Gallery 增加 minimal-warm，画布 Gallery 增加 solid-canvas，Step 2 布局表增加 H/H-2/I，版本更新至 v3.0
